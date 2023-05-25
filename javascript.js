@@ -1,58 +1,35 @@
-var numAleatorio = Math.floor(Math.random() * 100) + 1;
-var pontos = 100;
-var array = [];
-var stringArray = "";
-var maiorOuMenor = "";
+var numeroAleatorio = Math.floor(Math.random() * 100) + 1;
 
-function novoJogo(){
-    
-    if (numDigitado == numAleatorio) {
-        numAleatorio = Math.floor(Math.random() * 100) + 1;
-        pontos = 100;
-        //console.log(numAleatorio);
-        document.getElementById("txtNumero").value = "";
-        var labelResposta = document.getElementById("labelResposta");
-        labelResposta.innerHTML = "Vamos jogar..."
-        array = [];
-        stringArray = "";
-        var labelTentativas = document.getElementById("labelTentativas");
-        labelTentativas.innerHTML = "...";
-    } else {
-        alert("Ainda não acertou, continue tentando!")
-    } 
-}
+		tentativas = 0;
+		acertou = false;
+		pontuacao = 0;
 
-function tentativa(){
-    numDigitado = parseInt(document.getElementById("txtNumero").value);
+		function verificar() {
+			const numeroDigitado = parseInt(document.getElementById("numero").value);
 
-    if(numDigitado != numAleatorio) {
-        //alert("errou")
-        pontos = pontos - 1;
-        var labelResposta = document.getElementById("labelResposta");
-        if (numDigitado < numAleatorio) {
-            maiorOuMenor = "Maior";
-        } else {
-            maiorOuMenor = "Menor";
-        }
-        labelResposta.innerHTML = "Errou! tente novamente. Você realizou " + (100 - pontos) + " tentativas." + " Tente um número " + maiorOuMenor
+			if (numeroDigitado < 1 || numeroDigitado > 100 || isNaN(numeroDigitado)) {
+				return;
+			}
 
-    }else{
-        var labelResposta = document.getElementById("labelResposta");
-        labelResposta.innerHTML = "Parabéns, Você Acertou! fez "+ pontos + " pontos."
-    }
-    console.log(numAleatorio)
-    
-    adicionarElementos();
-    stringArray = array.join(',');
+			tentativas++;
 
-    var labelTentativas = document.getElementById("labelTentativas");
-    labelTentativas.innerHTML = stringArray;
+			if (numeroDigitado === numeroAleatorio) {
+				acertou = true;
+				pontuacao = 100 - (tentativas - 1) * 10;
+				var labelNum = document.getElementById("labelNum");
+				labelNum.innerHTML= document.getElementById("resultado").innerHTML = "Parabéns! Você acertou o número em "+tentativas+ "tentativas!";
+				document.getElementById("pontuacao").innerHTML = "Sua pontuação: "+pontuacao;
+			} else if (numeroDigitado < numeroAleatorio) {
+				document.getElementById("resultado").innerHTML = "Tente um número maior que "+numeroDigitado;
+			} else {
+				document.getElementById("resultado").innerHTML = "Tente um número menor que " +numeroDigitado;
+			}
+		}
 
-    document.getElementById("txtNumero").value = "";
-}
-
-function adicionarElementos() {
-    var input = document.getElementById("txtNumero");
-    var valores = input.value.split(",");
-    array.push(...valores);
-}
+		function reiniciar() {
+			tentativas = 0;
+			acertou = false;
+			pontuacao = 0;
+			var labelNum = document.getElementById("labelNum");
+				labelNum.innerHTML=  document.getElementById("numero").value = ""; document.getElementById("resultado").innerHTML = ""; document.getElementById("pontuacao").innerHTML = "";
+		}
