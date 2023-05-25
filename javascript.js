@@ -7,7 +7,7 @@ var numeroAleatorio = Math.floor(Math.random() * 100) + 1;
 		function verificar() {
 			const numeroDigitado = parseInt(document.getElementById("numero").value);
 
-			if (numeroDigitado < 1 || numeroDigitado > 100 || isNaN(numeroDigitado)) {
+			if (numeroDigitado < 1 || numeroDigitado > 100 || (numeroDigitado)) {
 				return;
 			}
 
